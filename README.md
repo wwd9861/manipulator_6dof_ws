@@ -1,0 +1,2 @@
+# manipulator_6dof_ws
+6dof_manipulator
