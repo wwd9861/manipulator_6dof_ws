@@ -18,16 +18,12 @@ class IkSolver(Node):
         
 
     def ik(self):
-        px, py, pz=200, 100, 100
+        px, py, pz=200, 0, 100
         self.x+=pi/20
-        Rst=np.zeros(9,dtype=float).reshape([3,3])
-        Rst[0,1], Rst[1,0], Rst[2,2]=1,1,-1
-        Rx=np.zeros(9,dtype=float).reshape([3,3])
         Rst=np.array([[0,1,0],[1,0,0],[0,0,-1]])
         Rz=np.array([[cos(self.x), -sin(self.x),0],[sin(self.x),cos(self.x),0],[0,0,1]])
-        Rx=np.array([[cos(pi/4),0,sin(pi/4)],[0,1,0],[0,sin(pi/4),cos(pi/4)]])
+        Rx=np.array([[1,0,0],[0,cos(pi/4),-sin(pi/4)],[0,sin(pi/4),cos(pi/4)]])
         R=Rst@Rz@Rx
-        print(R)
         r11, r12, r13, r21, r22, r23, r31, r32, r33=R[0,0],R[0,1],R[0,2],R[1,0],R[1,1],R[1,2],R[2,0],R[2,1],R[2,2]
         wx, wy, wz=px-l56*r13, py-l56*r23, pz-l56*r33
         theta1=atan2(wy,wx)
@@ -40,10 +36,13 @@ class IkSolver(Node):
         theta2=atan2(s,r)-atan2(l34*s3,l2+l34*c3)
         theta3=atan2(s3,c3)
 
-        theta4=atan2(sin(theta1)*r13-cos(theta1)*r23, -cos(theta1)*sin(theta2+theta3)*r13-sin(theta1)*sin(theta2+theta3)*r23+cos(theta2+theta3)*r33)
-        theta5=atan2(sqrt(1-(cos(theta1)*cos(theta2+theta3)*r13+sin(theta1)*cos(theta2+theta3)*r23+sin(theta2+theta3)*r33)**2), cos(theta1)*cos(theta2+theta3)*r13+sin(theta1)*cos(theta2+theta3)*r23+sin(theta2+theta3)*r33)
-        theta6=atan2(cos(theta1)*cos(theta2+theta3)*r11+sin(theta1)*cos(theta2+theta3)*r21+sin(theta2+theta3)*r31, cos(theta1)*cos(theta2+theta3)*r12+sin(theta1)*cos(theta2+theta3)*r22+sin(theta2+theta3)*r32)
-
+        theta5=atan2(-sqrt(1-(cos(theta1)*cos(theta2+theta3)*r13+sin(theta1)*cos(theta2+theta3)*r23+sin(theta2+theta3)*r33)**2), cos(theta1)*cos(theta2+theta3)*r13+sin(theta1)*cos(theta2+theta3)*r23+sin(theta2+theta3)*r33)
+        s4=(sin(theta1)*r13-cos(theta1)*r23)/sin(theta5)
+        c4=(-cos(theta1)*sin(theta2+theta3)*r13-sin(theta1)*sin(theta2+theta3)*r23+cos(theta2+theta3)*r33)/sin(theta5)
+        theta4=atan2(s4,c4)
+        s6=(cos(theta1)*cos(theta2+theta3)*r11+sin(theta1)*cos(theta2+theta3)*r21+sin(theta2+theta3)*r31)/(-sin(theta5))
+        c6=(cos(theta1)*cos(theta2+theta3)*r12+sin(theta1)*cos(theta2+theta3)*r22+sin(theta2+theta3)*r32)/(-sin(theta5))
+        theta6=atan2(s6,c6)
         self.theta1, self.theta2, self.theta3, self.theta4, self.theta5, self.theta6 =theta1, theta2, theta3, theta4, theta5, theta6
         print("theta1 : ",theta1*180/pi)
         print("theta2 : ",theta2*180/pi)
