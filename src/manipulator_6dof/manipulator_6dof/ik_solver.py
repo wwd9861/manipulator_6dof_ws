@@ -19,14 +19,14 @@ class IkSolver(Node):
 
     def ik(self):
         px, py, pz=200, 100, 100
-        self.x+=pi/10
+        self.x+=pi/20
         Rst=np.zeros(9,dtype=float).reshape([3,3])
         Rst[0,1], Rst[1,0], Rst[2,2]=1,1,-1
         Rx=np.zeros(9,dtype=float).reshape([3,3])
         Rst=np.array([[0,1,0],[1,0,0],[0,0,-1]])
         Rz=np.array([[cos(self.x), -sin(self.x),0],[sin(self.x),cos(self.x),0],[0,0,1]])
         Rx=np.array([[cos(pi/4),0,sin(pi/4)],[0,1,0],[0,sin(pi/4),cos(pi/4)]])
-        R=Rx@Rz@Rst
+        R=Rst@Rz@Rx
         print(R)
         r11, r12, r13, r21, r22, r23, r31, r32, r33=R[0,0],R[0,1],R[0,2],R[1,0],R[1,1],R[1,2],R[2,0],R[2,1],R[2,2]
         wx, wy, wz=px-l56*r13, py-l56*r23, pz-l56*r33
