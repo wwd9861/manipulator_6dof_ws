@@ -5,7 +5,7 @@ import time
 from math import *
 import numpy as np
 
-l1,l2,l34,l56=150,200,150,150
+l1,l2,l34,l56=116, 105,133,126
 
 class IkSolver(Node):
     def __init__(self):
@@ -18,9 +18,10 @@ class IkSolver(Node):
         
 
     def ik(self):
-        px, py, pz=200, 0, 100
+        px, py, pz=250, 0, 150
         self.x+=pi/20
-        Rst=np.array([[0,1,0],[1,0,0],[0,0,-1]])
+        # Rst=np.array([[0,1,0],[1,0,0],[0,0,-1]])
+        Rst=np.array([[0,0,1],[1,0,0],[0,1,0]])
         Rz=np.array([[cos(self.x), -sin(self.x),0],[sin(self.x),cos(self.x),0],[0,0,1]])
         Rx=np.array([[1,0,0],[0,cos(pi/4),-sin(pi/4)],[0,sin(pi/4),cos(pi/4)]])
         R=Rst@Rz@Rx
@@ -43,7 +44,7 @@ class IkSolver(Node):
         s6=(cos(theta1)*cos(theta2+theta3)*r11+sin(theta1)*cos(theta2+theta3)*r21+sin(theta2+theta3)*r31)/(-sin(theta5))
         c6=(cos(theta1)*cos(theta2+theta3)*r12+sin(theta1)*cos(theta2+theta3)*r22+sin(theta2+theta3)*r32)/(-sin(theta5))
         theta6=atan2(s6,c6)
-        self.theta1, self.theta2, self.theta3, self.theta4, self.theta5, self.theta6 =theta1, theta2, theta3, theta4, theta5, theta6
+        self.theta1, self.theta2, self.theta3, self.theta4, self.theta5, self.theta6 =theta1, theta2-pi/2, theta3, theta4, theta5, theta6
         print("theta1 : ",theta1*180/pi)
         print("theta2 : ",theta2*180/pi)
         print("theta3 : ",theta3*180/pi)
