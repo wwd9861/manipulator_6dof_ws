@@ -9,4 +9,4 @@ rviz2
 ros2 run manipulator_6dof ik_solver
 ```
 
-![Screencastfrom03-09-2025022410PM-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/32b5d509-3ea3-4f57-bc20-830a8b503e99)
+![Screencastfrom03-15-2025061655PM-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/5618b668-bc9a-4cf2-ba03-c27e2c51a406)
